@@ -1,3 +1,6 @@
+const { generate } = require('multiple-cucumber-html-reporter');
+const { removeSync } = require('fs-extra');
+import cucumberJson from 'wdio-cucumberjs-json-reporter';
 exports.config = {
     //
     // ====================
@@ -132,9 +135,10 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
-
-
+    reporters: ['spec', ['cucumberjs-json', {
+        jsonFolder: 'reports/json/',
+        language: 'en', 
+        }]],
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -179,8 +183,9 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+     onPrepare: function (config, capabilities) {
+        removeSync('reports/');
+    } ,
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -255,8 +260,12 @@ exports.config = {
      * @param {number}             result.duration  duration of scenario in milliseconds
      * @param {Object}             context          Cucumber World object
      */
-    // afterStep: function (step, scenario, result, context) {
-    // },
+     afterStep:  async function (step, scenario, result, context) {
+        if (result.passed != true) {
+            cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
+            cucumberJson.attach("Current URL After Step: " + await browser.getUrl());
+        }
+    },
     /**
      *
      * Runs after a Cucumber Scenario.
@@ -267,8 +276,10 @@ exports.config = {
      * @param {number}                 result.duration  duration of scenario in milliseconds
      * @param {Object}                 context          Cucumber World object
      */
-    // afterScenario: function (world, result, context) {
-    // },
+     afterScenario: async function (world, result, context) {
+         cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
+         cucumberJson.attach("Current URL After Scenario: " + await browser.getUrl());   
+     },
     /**
      *
      * Runs after a Cucumber Feature.
@@ -312,13 +323,15 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
+     onComplete: function(exitCode, config, capabilities, results) {
+        generate({jsonDir: 'reports/json/',
+        reportPath: 'reports/html/',
+    })},
     /**
     * Gets executed when a refresh happens.
     * @param {String} oldSessionId session ID of the old session
     * @param {String} newSessionId session ID of the new session
     */
     //onReload: function(oldSessionId, newSessionId) {
-    //}
+    
 }
