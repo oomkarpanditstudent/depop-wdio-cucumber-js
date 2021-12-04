@@ -18,6 +18,9 @@
         "wdio-cucumberjs-json-reporter": "^4.1.4"
     },
     "scripts": {
-        "wdio": "wdio run wdio.conf.js"
+        "local.chrome": "wdio run chrome.conf.js",
+        "docker.grid": "wdio run docker.grid.conf.js --hostname 'selenium-hub'",
+        "docker.grid.local.exec": "wdio run docker.grid.conf.js"
+        
     }
 }
