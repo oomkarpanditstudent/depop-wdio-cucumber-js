@@ -9,7 +9,7 @@ class LoggedinPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get avatar() {
+    get loggedinAvatar() {
         return $('[data-testid="avatar__initials"]');
     }
 }

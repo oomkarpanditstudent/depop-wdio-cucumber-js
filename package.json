@@ -6,6 +6,7 @@
         "@babel/core": "^7.16.0",
         "@babel/preset-env": "^7.16.4",
         "@babel/register": "^7.16.0",
+        "@wdio/browserstack-service": "^7.16.10",
         "@wdio/cli": "^7.16.10",
         "@wdio/cucumber-framework": "^7.16.6",
         "@wdio/local-runner": "^7.16.10",
@@ -18,9 +19,11 @@
         "wdio-cucumberjs-json-reporter": "^4.1.4"
     },
     "scripts": {
-        "local.chrome": "wdio run chrome.conf.js",
+        "local.chrome": "wdio run local.chrome.conf.js",
         "docker.grid": "wdio run docker.grid.conf.js --hostname 'selenium-hub'",
-        "docker.grid.local.exec": "wdio run docker.grid.conf.js"
-        
+        "docker.grid.local.exec": "wdio run docker.grid.conf.js",
+        "browserstack": "wdio run browserstack.js"
+    },
+    "dependencies": {
     }
 }

@@ -15,11 +15,20 @@ Given(/^I accept cookies consent$/, async () => {
     await LoginPage.acceptCookiesPopup();
 });
 
-When(/^I login with (\w+) and (.+)$/, async (username, password) => {
+Given(/^I clear cache and cookies$/, async () => {
+    await LoginPage.clearCacheAndCookies();
+});
+
+When(/^I login with (.+) and (.+)$/, async (username, password) => {
     await LoginPage.login(username, password)
 });
 
-Then(/^I should see a user avatar$/, async () => {
-    await expect(LoggedinPage.avatar).toBeExisting();
+Then(/^I should (\w+) successfully with (\w+) credentials$/, async (permitDecision,typeOfCredentials) => {
+    if (typeOfCredentials==="valid")
+        await expect(LoggedinPage.loggedinAvatar).toBeExisting();
+    else{
+        //permitDecision is not used but was required for reuse of step definition, to make sense in writing test and also reporting
+        await expect(LoginPage.errorMessage).toBeExisting();    
+    }
 });
 

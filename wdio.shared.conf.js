@@ -238,8 +238,11 @@ exports.config = {
      * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
      * @param {Object}                 context  Cucumber World object
      */
-    // beforeScenario: function (world, context) {
-    // },
+     beforeScenario: async function (world, context) {
+     if (!driver.isMobile){
+        await browser.maximizeWindow()
+     }
+    },
     /**
      *
      * Runs before a Cucumber Step.
@@ -261,7 +264,7 @@ exports.config = {
      * @param {Object}             context          Cucumber World object
      */
      afterStep:  async function (step, scenario, result, context) {
-        if (result.passed != true) {
+        if (!result.passed) {
             cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
             cucumberJson.attach("Current URL After Step: " + await browser.getUrl());
         }

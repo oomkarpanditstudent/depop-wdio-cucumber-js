@@ -21,6 +21,10 @@ class LoginPage extends Page {
         return $('[data-testid="login__cta"]');
     }
 
+    get errorMessage() {
+        return $('[data-testid="login__error--server"]');
+    }
+    
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -30,10 +34,10 @@ class LoginPage extends Page {
         await this.inputPassword.setValue(password);
         await this.btnSubmit.click();
     }
+    async clearCacheAndCookies () {
+       await browser.reloadSession();
+    }
 
-    /**
-     * overwrite specific options to adapt it to page object
-     */
     open() {
         return super.open('login');
     }
