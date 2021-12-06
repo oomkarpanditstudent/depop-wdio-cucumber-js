@@ -1,0 +1,52 @@
+version: "3"
+services:
+  selenium-hub:
+    image: selenium/hub
+    ports:
+      - "4444:4444"
+    container_name: selenium-hub
+    environment:
+      GRID_MAX_SESSION: 10
+      GRID_BROWSER_TIMEOUT: 30000
+      GRID_TIMEOUT: 30000
+  chrome-debug:
+    image: selenium/node-chrome-debug
+    volumes:
+      - /dev/shm:/dev/shm
+      - /var/tmp/:/var/tmp/
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - NODE_MAX_SESSION=5
+      - NODE_MAX_INSTANCES=5
+    ports:
+      - "5901:5900"
+    depends_on:
+      - selenium-hub
+  
+  firefox-debug:
+    image: selenium/node-firefox-debug
+    volumes:
+      - /dev/shm:/dev/shm
+      - /var/tmp/:/var/tmp/
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - NODE_MAX_SESSION=5
+      - NODE_MAX_INSTANCES=5
+    ports:
+      - "5800:5900"
+  depop-wdio-cucumber-js:
+    image: node:14.16.0
+    volumes:
+      - ./:/tmp/depop-wdio-cucumber-js
+      - /var/tmp/:/var/tmp/
+    container_name: depop-wdio-cucumber-js
+    working_dir: /tmp/depop-wdio-cucumber-js
+    command: bash -c "npm run docker.grid"
+    depends_on:
+      - selenium-hub
+      - chrome-debug
+      - firefox-debug

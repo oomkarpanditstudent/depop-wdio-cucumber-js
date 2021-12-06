@@ -1,0 +1,4 @@
+version: "3"
+services:
+  depop-wdio-cucumber-js:
+    command: bash -c "npm install && npm run docker.grid"
