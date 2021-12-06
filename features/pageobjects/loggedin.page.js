@@ -1,5 +1,4 @@
 
-
 import Page from './page';
 
 /**
@@ -9,8 +8,8 @@ class LoggedinPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get loggedinAvatar() {
-        return $('[data-testid="avatar__initials"]');
+    get navLinkMessages() {
+        return $('[data-testid="navigation__messages"]');
     }
 }
 

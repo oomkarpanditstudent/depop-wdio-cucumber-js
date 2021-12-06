@@ -25,7 +25,7 @@ When(/^I login with (.+) and (.+)$/, async (username, password) => {
 
 Then(/^I should (\w+) successfully with (\w+) credentials$/, async (permitDecision,typeOfCredentials) => {
     if (typeOfCredentials==="valid")
-        await expect(LoggedinPage.loggedinAvatar).toBeExisting();
+        await expect(LoggedinPage.navLinkMessages).toBeExisting();
     else{
         //permitDecision is not used but was required for reuse of step definition, to make sense in writing test and also reporting
         await expect(LoginPage.errorMessage).toBeExisting();    
