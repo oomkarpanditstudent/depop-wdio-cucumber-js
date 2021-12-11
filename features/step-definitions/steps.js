@@ -32,3 +32,10 @@ Then(/^I should (\w+) successfully with (\w+) credentials$/, async (permitDecisi
     }
 });
 
+When(/^I enter following details in form:$/, async(datatable)=>{
+    await LoginPage.fillFormViaLabelNames(datatable);
+});
+
+When(/^I click login$/, async()=>{
+    await LoginPage.clickLogin();
+});

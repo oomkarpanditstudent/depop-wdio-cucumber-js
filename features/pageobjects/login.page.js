@@ -37,7 +37,9 @@ class LoginPage extends Page {
     async clearCacheAndCookies () {
        await browser.reloadSession();
     }
-
+    async clickLogin () {
+        await this.btnSubmit.click();
+    }
     open() {
         return super.open('login');
     }
