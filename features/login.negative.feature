@@ -15,8 +15,8 @@ Scenario Outline: As an invalid user (invalid credentials), I should not be able
 
     Examples:
     |typeOfCredentials     | username                   | password             | permitDecision    |
-    |invalid               | oomkar@yahoo.com           | InvalidPassword$1    | not_login         |
-    |invalid               | oomkar                     | InvalidPassword$2    | not_login         |
-    |invalid               | invalid_email@yahoo.com    | Depop!"£123          | not_login         |
-    |invalid               | invalid_user               | Depop!"£123          | not_login         |
+    |invalid               | validuser@yahoo.com        | InvalidPassword$1    | not_login         |
+    |invalid               | validid                    | InvalidPassword$2    | not_login         |
+    |invalid               | invalid_email@yahoo.com    | validpasswd          | not_login         |
+    |invalid               | invalid_user               | validpasswd          | not_login         |
     

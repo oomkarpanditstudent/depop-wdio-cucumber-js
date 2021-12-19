@@ -14,7 +14,7 @@ Scenario Outline: As a valid user, I should be able to login successfully on the
     Then  I should <permitDecision> successfully with <typeOfCredentials> credentials
 
     Examples:
-    |typeOfCredentials     | username           | password             | permitDecision  |
-    |valid                 | oomkar             | Depop!"£123          | login           |
-    |valid                 | oomkar@yahoo.com   | Depop!"£123          | login           |
+    |typeOfCredentials     | username           | password           | permitDecision  |
+    |valid                 | useconfig          | useconfig          | login           |
+    |valid                 | useconfigemail     | useconfig          | login           |
 

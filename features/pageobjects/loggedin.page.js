@@ -11,6 +11,8 @@ class LoggedinPage extends Page {
     get navLinkMessages() {
         return $('[data-testid="navigation__messages"]');
     }
+    get inputSearchOnFacebook() {
+        return $('[placeholder="Search Facebook"]');
+    }
 }
-
 export default new LoggedinPage();
