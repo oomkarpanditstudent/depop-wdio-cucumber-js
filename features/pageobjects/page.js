@@ -3,6 +3,8 @@
 * that is shared across all page objects
 */
 import cucumberJson from 'wdio-cucumberjs-json-reporter';
+const fs =require('fs');
+
 export default class Page {
     /**
     * Opens a sub page of the page
@@ -11,8 +13,8 @@ export default class Page {
     get btnAcceptCookie() {
         return $('[data-testid="cookieBanner__acceptAllButton"]');
      }
-    open(path) {
-        return browser.url(browser.options.baseUrl+path);
+    async open(path) {
+        return await browser.url(browser.options.baseUrl+path);
     }
     
     async acceptCookiesPopup() {
@@ -54,4 +56,23 @@ export default class Page {
         }
          cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
       }
+
+ async storeCookies(filename){
+    var cookies = await browser.getCookies();
+    fs.writeFileSync(filename,JSON.stringify(cookies));
+  }
+ async switchToNextWindow(){
+    await browser.pause(3000)
+    var windows = await browser.getWindowHandles()
+    if (windows.length>1)
+    await browser.switchToWindow(windows[1]);
+ }
+ 
+ async switchToParentWindow(){
+    await browser.pause(3000)
+    var windows = await browser.getWindowHandles()
+    if (windows.length>1)
+    await browser.switchToWindow(windows[0]);
+ }
+
 }
